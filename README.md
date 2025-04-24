@@ -53,46 +53,16 @@ Krabbel/
 
 ## Getting Started
 
-### Backend Setup
-
-1. Navigate to the backend directory:
-   ```
-   cd backend
+1. Install dependencies and run both frontend and backend:
+   ```bash
+   (cd backend && mvn clean install && mvn spring-boot:run) & (cd frontend && npm install && npm run dev)
    ```
 
-2. Build the project:
-   ```
-   mvn clean install
-   ```
-
-3. Run the Spring Boot application:
-   ```
-   mvn spring-boot:run
-   ```
-
-The backend will start on http://localhost:8081 with the following endpoints:
-- API: http://localhost:8081/api/
-- Swagger UI: http://localhost:8081/swagger-ui/index.html
-- H2 Console: http://localhost:8081/h2-console (JDBC URL: jdbc:h2:mem:noted_db)
-
-### Frontend Setup
-
-1. Navigate to the frontend directory:
-   ```
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```
-   npm install
-   ```
-
-3. Run the development server:
-   ```
-   npm run dev
-   ```
-
-The frontend will start on http://localhost:5173
+2. Access the application:
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:8080/api/
+   - Swagger UI: http://localhost:8080/swagger-ui/index.html
+   - H2 Console: http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:noted_db)
 
 ## Default Users
 
@@ -108,51 +78,97 @@ The application is pre-configured with two users:
    - Password: user123
    - Role: USER
 
-## API Documentation
+## Progress
 
-The API documentation is available via Swagger UI at http://localhost:8081/swagger-ui/index.html when the backend is running.
+### Core Requirements
+- [x] Implement proper error handling and user feedback
+- [x] Add input validation for note creation/editing
+- [x] Implement proper password hashing and security measures
+- [ ] Add unit tests for both frontend and backend
+- [ ] Set up CI/CD pipeline
+- [ ] Add proper logging
+- [x] Implement proper session management
+- [ ] Add rate limiting for API endpoints
 
-## Deployment
+### Note Management Features
+- [ ] Rich text editor integration for note content
+- [x] Note metadata:
+  - [x] Title
+  - [x] Content (basic text)
+  - [ ] Labels/tags
+  - [x] Creation/update date and time
+  - [ ] Deadlines
+  - [ ] Images/attachments
+- [ ] Search functionality:
+  - [ ] Search by title
+  - [ ] Search by tags
+- [ ] Filtering:
+  - [ ] Filter by date
+  - [ ] Filter by tags
+- [x] Note actions:
+  - [x] Archive notes (soft delete)
+  - [x] Delete notes
+  - [ ] Share notes with others
+  - [ ] Export notes to PDF
+- [ ] Version control:
+  - [ ] Track note versions
+  - [ ] Restore previous versions
+- [ ] UI/UX:
+  - [ ] Dark mode support
+  - [ ] Automatic icon generation for labels
+  - [ ] Remember user preferences (filters, theme)
+  - [ ] Responsive design
 
-### Backend
+### Frontend Implementation
+- [x] Vue 3 with Composition API:
+  - [x] Setup login page
+  - [x] Setup main notes page
+- [x] Bootstrap CSS integration
+- [x] Linting setup
+- [x] Axios/Fetch implementation for API calls
+- [ ] State management for:
+  - [x] User authentication
+  - [x] Notes data
+  - [ ] UI preferences
 
-To build a production JAR file:
+### Backend Implementation
+- [x] MySQL database setup (H2 for development)
+- [x] Swagger documentation
+- [x] Helper methods:
+  - [x] Email validation
+  - [x] Password hashing
+- [x] CORS configuration
+- [x] Dummy data generation
+- [x] API endpoints for:
+  - [x] User authentication
+  - [x] CRUD operations for notes
+  - [ ] Note sharing
+  - [ ] Version control
+  - [ ] Export functionality
 
-```
-cd backend
-mvn clean package
-```
-
-The JAR file will be available in the `target` directory and can be run with:
-
-```
-java -jar target/noted-backend-0.0.1-SNAPSHOT.jar
-```
-
-### Frontend
-
-To build for production:
-
-```
-cd frontend
-npm run build
-```
-
-The production build will be available in the `dist` directory.
-
-## Running Both Frontend and Backend
-
-You can run both the frontend and backend simultaneously using a single command. From the project root directory, run:
-
-```bash
-(cd backend && mvn spring-boot:run) & (cd frontend && npm run dev)
-```
-
-This will:
-1. Start the backend server on http://localhost:8081
-2. Start the frontend development server on http://localhost:5173
-
-Note: The `&` operator runs both commands in parallel. You can stop both servers by pressing `Ctrl+C` in the terminal.
+### AI Integration (Note Enhancement)
+- [ ] Research and select appropriate AI/LLM service (e.g., OpenAI, Anthropic, or self-hosted)
+- [ ] Design API endpoints for note processing:
+  - [ ] Formatting endpoint
+  - [ ] Summarization endpoint
+  - [ ] Keyword extraction
+  - [ ] Topic categorization
+- [ ] Implement backend service for AI processing:
+  - [ ] Create service layer for AI interactions
+  - [ ] Add caching for processed notes
+  - [ ] Implement rate limiting for AI requests
+- [ ] Add frontend components:
+  - [ ] Note enhancement button/option
+  - [ ] Processing status indicators
+  - [ ] Preview of AI-suggested changes
+  - [ ] User approval workflow
+- [ ] Implement features:
+  - [ ] Auto-formatting of messy notes
+  - [ ] Smart summarization
+  - [ ] Keyword/tag suggestions
+  - [ ] Topic categorization
+  - [ ] Grammar and spelling correction
+  - [ ] Structure suggestions for better readability
 
 ## License
 
