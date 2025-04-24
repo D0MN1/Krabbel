@@ -1,0 +1,61 @@
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# Logs
+logs/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Node modules
+node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Maven build directory
+target/
+
+# Frontend build directory
+frontend/dist/
+
+# Compiled class files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Debug files
+*.stackdump
+*.db
+
+# Temporary files
+*.swp
+*.swo
+*~
+tmp/
+temp/
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+
+# Dependencies
+/.pnp
+.pnp.js
+
+# JUnit reports
+TEST-*.xml 
+
+# Github Publishing Guide
+GITHUB_PUBLISHING_GUIDE.md
+
