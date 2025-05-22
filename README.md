@@ -34,13 +34,21 @@ The project is organized as a monorepo with the following structure:
 
 ```
 Krabbel/
-├── backend/         # Spring Boot backend
-│   ├── src/         # Source code
-│   └── pom.xml      # Maven dependencies
-├── frontend/        # Vue.js frontend
-│   ├── src/         # Source code
-│   └── package.json # npm dependencies
-└── README.md        # This file
+├── backend/             # Spring Boot backend
+│   ├── src/             # Source code
+│   └── pom.xml          # Maven dependencies
+├── frontend/            # Vue.js frontend
+│   ├── src/             # Source code
+│   └── package.json     # npm dependencies
+├── scripts/             # Utility scripts
+│   ├── deploy-to-azure.sh
+│   └── verify-deployment.sh
+├── run.sh               # Cross-platform run script
+├── run.bat              # Windows run script
+├── prepare-production.sh # Production preparation script
+├── prepare-production.bat # Windows production preparation script
+├── .env.template        # Template for environment variables
+└── README.md            # This file
 ```
 
 ## Prerequisites
@@ -49,6 +57,7 @@ Krabbel/
 - Node.js 16 or higher
 - npm or yarn
 - Maven 3.6 or higher
+- MySQL/MariaDB 8.0+ (for production)
 - MySQL (for production)
 
 ## Getting Started
@@ -69,25 +78,35 @@ Krabbel/
 
 3. **Start Both Frontend and Backend Together**
    ```bash
-   # Start both in the background
+   # Using the unified run script (recommended)
+   ./run.sh
+   
+   # With specific profile
+   ./run.sh --profile dev
+   
+   # Run only backend
+   ./run.sh --backend-only
+   
+   # Run only frontend
+   ./run.sh --frontend-only
+   
+   # Alternative: Start both in the background manually
    (cd backend && ./mvnw spring-boot:run) & (cd frontend && npm run dev)
    ```
 
-14. **Stop Running Backend Process (if needed)**
+4. **Stop Running Backend Process (if needed)**
    ```bash
    # Option 1: If you started with Ctrl+C in the terminal
    # Simply press Ctrl+C in the terminal where Spring Boot is running
    
-   # Option 2: Using Spring Boot Actuator endpoint (if configured)
-   curl -X POST http://localhost:8081/actuator/shutdown
+   # Option 2: Using Spring Boot Actuator endpoint
+   curl -X POST http://localhost:8080/actuator/shutdown
    
    # Option 3: If all else fails, find and kill the process
    pid=$(ps -ef | grep spring-boot | grep -v grep | awk '{print $2}')
    if [ -n "$pid" ]; then
      echo "Stopping Spring Boot app with PID: $pid"
      kill $pid
-     # Only use kill -9 as a last resort if the process won't terminate
-     # kill -9 $pid
    else
      echo "No Spring Boot process found"
    fi
@@ -109,43 +128,48 @@ Krabbel/
 
 3. **Start Both Frontend and Backend Together**
    ```cmd
-   # Option 1: Using two separate command prompts
-   # First command prompt:
+   REM Using the unified run script (recommended)
+   run.bat
+   
+   REM With specific profile
+   run.bat --profile dev
+   
+   REM Run only backend
+   run.bat --backend-only
+   
+   REM Run only frontend
+   run.bat --frontend-only
+   
+   REM Alternative: Using two separate command prompts
+   REM First command prompt:
    cd backend
    mvnw.cmd spring-boot:run
    
-   # Second command prompt:
+   REM Second command prompt:
    cd frontend
    npm run dev
-   
-   # Option 2: Using one command prompt with start
-   start cmd /k "cd backend && mvnw.cmd spring-boot:run"
-   start cmd /k "cd frontend && npm run dev"
    ```
 
 4. **Stop Running Backend Process (if needed)**
    ```cmd
-   # Option 1: If you started with Ctrl+C in the terminal
-   # Simply press Ctrl+C in the terminal where Spring Boot is running
+   REM Option 1: If you started with Ctrl+C in the terminal
+   REM Simply press Ctrl+C in the terminal where Spring Boot is running
    
-   # Option 2: Using Spring Boot Actuator endpoint (if configured)
-   curl -X POST http://localhost:8081/actuator/shutdown
+   REM Option 2: Using Spring Boot Actuator endpoint
+   curl -X POST http://localhost:8080/actuator/shutdown
    
-   # Option 3: If all else fails, find and kill the process
+   REM Option 3: If all else fails, find and kill the process
    FOR /F "tokens=1" %%A IN ('jps -l ^| findstr KrabbelApplication') DO (
      echo Stopping Spring Boot with PID: %%A
      taskkill /PID %%A
-     REM Only use /F as a last resort if the process won't terminate
-     REM taskkill /F /PID %%A
    )
    ```
 
 ### Access the Application
 
 - Frontend: http://localhost:5173
-- Backend API: http://localhost:8081/api/
-- Swagger UI: http://localhost:8081/swagger-ui/index.html
-- H2 Console: http://localhost:8081/h2-console (JDBC URL: jdbc:h2:mem:noted_db)
+- Backend API: http://localhost:8080/api/
+- Swagger UI: http://localhost:8080/swagger-ui/index.html (not available in production)
 
 ## Default Users
 
@@ -215,7 +239,7 @@ The application is pre-configured with two users:
   - [ ] UI preferences
 
 ### Backend Implementation
-- [x] MySQL database setup (H2 for development)
+- [x] MySQL database setup
 - [x] Swagger documentation
 - [x] Helper methods:
   - [x] Email validation
@@ -224,6 +248,43 @@ The application is pre-configured with two users:
 - [x] Dummy data generation
 - [x] API endpoints for:
   - [x] User authentication
+
+## Production Deployment
+
+### Prerequisites
+- Azure account with appropriate permissions
+- Azure CLI installed
+- MySQL/MariaDB database server (local or Azure Database for MySQL)
+
+### Preparing for Production
+
+1. Configure environment variables:
+   ```bash
+   # Copy the environment template
+   cp .env.template .env
+   
+   # Edit with your values
+   nano .env
+   ```
+
+2. Run the production preparation script:
+   ```bash
+   # On Linux/macOS
+   ./prepare-production.sh
+   
+   # On Windows
+   prepare-production.bat
+   ```
+
+3. Review production settings:
+   - Check `backend/src/main/resources/application-prod.properties`
+   - Verify environment variables in `.env.production`
+
+4. Follow the Azure deployment guide:
+   - See `AZURE_DEPLOYMENT.md` for detailed instructions
+   - Use the provided scripts in the `scripts/` directory
+
+For detailed security configuration, refer to `SECURITY_CHECKLIST.md`
   - [x] CRUD operations for notes
   - [ ] Note sharing
   - [ ] Version control

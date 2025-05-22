@@ -18,6 +18,10 @@ node_modules/
 .env
 .env.local
 .env.*.local
+.env.development
+.env.production
+.env.test
+*.env
 
 # Maven build directory
 target/
@@ -36,6 +40,18 @@ frontend/dist/
 # Debug files
 *.stackdump
 *.db
+
+# Security and keys
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.cer
+*.crt
+secret*
+*password*
 
 # Temporary files
 *.swp

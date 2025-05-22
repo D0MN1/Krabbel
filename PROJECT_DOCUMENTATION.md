@@ -28,7 +28,7 @@ Krabbel follows a modern client-server architecture with:
 ```
 ┌───────────────┐     HTTP/JSON     ┌────────────────┐     JPA      ┌────────────┐
 │   Vue.js SPA  │ ────────────────> │  Spring Boot   │ ───────────> │  Database  │
-│   (Browser)   │ <──────────────── │  REST API      │ <─────────── │  (H2/MySQL)│
+│   (Browser)   │ <──────────────── │  REST API      │ <─────────── │  (MySQL)   │
 └───────────────┘                   └────────────────┘              └────────────┘
                                          │
                                          │ Authentication
@@ -47,8 +47,9 @@ Krabbel follows a modern client-server architecture with:
 - **Spring Web**: REST API development
 - **Spring Security**: Authentication and authorization
 - **Spring Data JPA**: Data access layer
-- **H2 Database**: In-memory database for development
-- **MySQL Connector**: For production database connectivity
+- **MySQL Connector**: Database connectivity
+- **Application Insights**: Monitoring in Azure
+- **Spring Boot Actuator**: Health checks and monitoring endpoints
 - **JSON Web Token (JWT)**: JWT libraries for authentication
 - **Lombok**: Reduces boilerplate code
 - **Swagger/SpringDoc**: API documentation
@@ -280,27 +281,69 @@ npm run test
 
 ## Production Deployment
 
-### Backend Deployment
+### Production Preparation
 
-1. Configure production database:
-   - Update `application-prod.properties` with MySQL configuration
-   - Secure JWT secret key
-
-2. Build production JAR:
-   ```
-   mvn clean package -Pprod
-   ```
-
-3. Run with production profile:
-   ```
-   java -jar target/noted-backend-0.0.1-SNAPSHOT.jar --spring.profiles.active=prod
+1. Configure environment variables:
+   ```bash
+   # Copy the environment template
+   cp .env.template .env
+   
+   # Edit with your values
+   nano .env
    ```
 
-### Frontend Deployment
-
-1. Build for production:
+2. Run the production preparation script:
+   ```bash
+   # On Linux/macOS
+   ./prepare-production.sh
+   
+   # On Windows
+   prepare-production.bat
    ```
-   npm run build
+
+   This script will:
+   - Generate secure secrets for production
+   - Build the backend (JAR file)
+   - Build the frontend (static files)
+   - Create a combined production build in the `build` directory
+   - Update security checklist
+
+### Deployment to Azure
+
+Refer to `AZURE_DEPLOYMENT.md` for comprehensive deployment instructions.
+
+The deployment includes:
+1. Creating Azure resources (App Service, MySQL database)
+2. Configuring environment variables in Azure
+3. Deploying the application
+4. Setting up monitoring and alerts
+5. Configuring database backups
+
+### Running in Production Mode Locally
+
+To test the production configuration locally:
+
+```bash
+# Using the run script
+./run.sh --profile prod
+
+# Or using the dedicated script
+./scripts/run-prod-local.sh
+```
+
+### Security Considerations
+
+1. Update default passwords:
+   ```bash
+   ./scripts/update-prod-passwords.sh
    ```
 
-2. Deploy `dist` directory to web server 
+2. Verify security checklist:
+   ```bash
+   cat SECURITY_CHECKLIST.md
+   ```
+
+3. Ensure database security:
+   ```bash
+   cat DATABASE_SECURITY.md
+   ``` 
