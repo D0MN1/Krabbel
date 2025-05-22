@@ -181,6 +181,7 @@ public class Note {
 
 - `GET /api/notes`: Get all notes for authenticated user
 - `GET /api/notes/{id}`: Get specific note by ID
+- `GET /api/notes/search?keyword=query`: Search notes by keyword in title or content
 - `POST /api/notes`: Create new note
 - `PUT /api/notes/{id}`: Update existing note
 - `DELETE /api/notes/{id}`: Delete note

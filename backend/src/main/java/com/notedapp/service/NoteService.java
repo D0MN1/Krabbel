@@ -13,4 +13,4 @@ public interface NoteService {
     void deleteNote(User user, Long noteId);
     NoteResponse getNote(User user, Long noteId);
     List<NoteResponse> searchNotes(User user, String keyword);
-}
+} 
