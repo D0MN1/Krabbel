@@ -2,81 +2,59 @@ package com.notedapp.service.impl;
 
 import com.notedapp.dto.note.NoteRequest;
 import com.notedapp.dto.note.NoteResponse;
-import com.notedapp.entity.Note;
 import com.notedapp.entity.User;
-import com.notedapp.repository.NoteRepository;
-import com.notedapp.service.NoteService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.notedapp.service.NoteService; // Import NoteService
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class NoteServiceImpl implements NoteService {
 
-    @Autowired
-    private NoteRepository noteRepository;
-
     @Override
     public List<NoteResponse> getUserNotes(User user) {
-        return noteRepository.findByUserAndIsDeletedFalseOrderByUpdatedAtDesc(user)
-                .stream()
-                .map(this::convertToResponse)
-                .collect(Collectors.toList());
+        // Implement this method
+        return null;
     }
 
     @Override
-    @Transactional
     public NoteResponse createNote(User user, NoteRequest request) {
-        Note note = new Note();
-        note.setUser(user);
-        note.setTitle(request.getTitle());
-        note.setContent(request.getContent());
-        
-        Note savedNote = noteRepository.save(note);
-        return convertToResponse(savedNote);
+        // Implement this method
+        return null;
     }
 
     @Override
-    @Transactional
     public NoteResponse updateNote(User user, Long noteId, NoteRequest request) {
-        Note note = noteRepository.findByIdAndUser(noteId, user)
-                .orElseThrow(() -> new RuntimeException("Note not found"));
-        
-        note.setTitle(request.getTitle());
-        note.setContent(request.getContent());
-        
-        Note updatedNote = noteRepository.save(note);
-        return convertToResponse(updatedNote);
+        // Implement this method
+        return null;
     }
 
     @Override
-    @Transactional
     public void deleteNote(User user, Long noteId) {
-        Note note = noteRepository.findByIdAndUser(noteId, user)
-                .orElseThrow(() -> new RuntimeException("Note not found"));
-        
-        note.setDeleted(true);
-        noteRepository.save(note);
+        // Implement this method
     }
 
     @Override
     public NoteResponse getNote(User user, Long noteId) {
-        Note note = noteRepository.findByIdAndUser(noteId, user)
-                .orElseThrow(() -> new RuntimeException("Note not found"));
-        
-        return convertToResponse(note);
+        // Implement this method
+        return null;
     }
 
-    private NoteResponse convertToResponse(Note note) {
-        return new NoteResponse(
-                note.getId(),
-                note.getTitle(),
-                note.getContent(),
-                note.getCreatedAt(),
-                note.getUpdatedAt()
-        );
+    @Override
+    public List<NoteResponse> getPublicNotes() {
+        // Implement this method
+        return null;
     }
-} 
+
+    @Override
+    public List<NoteResponse> getPublicNotesByUserId(Long userId) {
+        // Implement this method
+        return null;
+    }
+
+    @Override
+    public NoteResponse getPublicNoteById(Long noteId) {
+        // Implement this method
+        return null;
+    }
+}

@@ -12,5 +12,6 @@ import java.util.Optional;
 public interface NoteRepository extends JpaRepository<Note, Long> {
     List<Note> findByUserAndIsDeletedFalse(User user);
     List<Note> findByUserAndIsDeletedFalseOrderByUpdatedAtDesc(User user);
-    Optional<Note> findByIdAndUser(Long id, User user);
-} 
+    Optional<Note> findByIdAndUserAndIsDeletedFalse(Long id, User user);
+    List<Note> findByIsPublicTrueAndIsDeletedFalse(); // publieke notities
+}

@@ -1,5 +1,8 @@
 package com.notedapp.controller;
 
+
+// If NoteService does not exist, create it in com.notedapp.service package
+
 import com.notedapp.dto.note.NoteRequest;
 import com.notedapp.dto.note.NoteResponse;
 import com.notedapp.entity.User;
@@ -19,10 +22,17 @@ public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    @GetMapping
-    public ResponseEntity<List<NoteResponse>> getUserNotes(@AuthenticationPrincipal User user) {
-        return ResponseEntity.ok(noteService.getUserNotes(user));
+   @GetMapping
+public ResponseEntity<List<NoteResponse>> getUserNotes(@AuthenticationPrincipal User user) {
+    if (user == null) {
+        System.out.println("⚠️ GEEN ingelogde gebruiker ontvangen!");
+    } else {
+        System.out.println("✅ Ingelogde gebruiker: " + user.getEmail());
     }
+
+    return ResponseEntity.ok(noteService.getUserNotes(user));
+}
+
 
     @PostMapping
     public ResponseEntity<NoteResponse> createNote(

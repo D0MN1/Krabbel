@@ -1,3 +1,4 @@
+// filepath: src/main/java/com/notedapp/service/NoteService.java
 package com.notedapp.service;
 
 import com.notedapp.dto.note.NoteRequest;
@@ -12,4 +13,7 @@ public interface NoteService {
     NoteResponse updateNote(User user, Long noteId, NoteRequest request);
     void deleteNote(User user, Long noteId);
     NoteResponse getNote(User user, Long noteId);
-} 
+    List<NoteResponse> getPublicNotes();
+    List<NoteResponse> getPublicNotesByUserId(Long userId);
+    NoteResponse getPublicNoteById(Long noteId);
+}

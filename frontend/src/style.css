@@ -1,92 +1,198 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --primary: #00bbff;
+  --secondary: #0096cd;
+  --background: #ffffff;
+  --text: #8f8787;
+  --link: #2290ff;
+  --hover: #00c0e6;
+
+  font-family: 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  background-color: var(--background);
+  color: var(--text);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
 body {
   margin: 0;
-  display: block;
   min-height: 100vh;
-  width: 100%;
+  background-color: var(--background);
+  color: var(--text);
 }
 
-h1 {
-  font-size: 2.5em;
-  line-height: 1.1;
+a {
+  font-weight: 500;
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--hover);
+}
+
+h1, h2, h3 {
+  color: var(--secondary);
+  margin-bottom: 1rem;
 }
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
+  border: none;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--primary);
+  color: white;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: background-color 0.25s;
 }
+
 button:hover {
-  border-color: #646cff;
+  background-color: var(--hover);
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
 .card {
-  padding: 1.5em;
-  width: 100%;
+  background: white;
+  border: 1px solid #eee;
+  border-left: 5px solid var(--primary);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
   box-sizing: border-box;
-}
-
-#app {
   width: 100%;
-  margin: 0 auto;
-  padding: 1rem;
-  text-align: left;
 }
 
-@media (min-width: 768px) {
+/* Navbar - fixed top */
+.navbar {
+  background-color: var(--primary);
+  padding: 0.5rem 1rem; 
+}
+
+.navbar .navbar-brand {
+  font-weight: 600;
+  color: white;
+}
+
+.navbar-text {
+  color: white;
+}
+
+.navbar .btn-light {
+  background-color: #00bbd9;
+  color: white;
+}
+
+.navbar .btn-light:hover {
+  background-color: #0395ac;
+}
+
+/* Sidebar - fixed left */
+.sidebar {
+  position: fixed;
+  top: 100px; /* Hoogte van navbar */
+  left: 0;
+  width: 220px;
+  height: calc(100vh - 56px);
+  background-color: #f8f9fa;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  z-index: 1000;
+}
+
+.sidebar-btn {
+  display: block;
+  margin-bottom: 15px;
+  padding: 10px;
+  width: 100%;
+  text-align: left;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 600;
+}
+
+.sidebar-btn:hover {
+  background-color: #00bbff;
+  color: white;
+}
+
+/* Main content */
+.main-content {
+  margin-left: 220px;
+  margin-top: 56px;
+  padding: 2rem;
+}
+
+/* Buttons */
+.add-note-btn,
+.logout-btn {
+  background-color: #00bbd9;
+  color: white;
+  border: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.add-note-btn:hover,
+.logout-btn:hover {
+  background-color: #0395ac;
+  color: white;
+}
+
+/* Containers */
+.container-fluid {
+  padding: 1.5rem 1rem;
+  background-color: var(--primary);
+  border-radius: 12px;
+}
+
+.container-fluid .logo-text {
+  color: white;
+  font-weight: 600;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   h1 {
-    font-size: 3.2em;
+    font-size: 2rem;
+  }
+
+  .card {
+    padding: 1rem;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 1rem;
   }
 
   #app {
-    padding: 2rem;
-    width: 100%;
-    max-width: 1400px;
+    padding: 1rem;
   }
-}
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    top: 0;
+    box-shadow: none;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+
+  .main-content {
+    margin-left: 0;
+    margin-top: 56px;
+    padding: 1rem;
   }
 }

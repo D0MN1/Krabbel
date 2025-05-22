@@ -1,13 +1,14 @@
 <template>
-  <div id="app">
-    <router-view />
-  </div>
+  <router-view :key="$route.fullPath" />
 </template>
 
+
 <script setup>
-// No script needed for this basic setup
+// Import de Navbar component
+
+
 </script>
 
 <style>
-/* Global styles can go here if needed */
+
 </style>

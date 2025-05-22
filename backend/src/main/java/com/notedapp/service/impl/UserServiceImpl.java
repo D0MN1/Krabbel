@@ -34,6 +34,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new RuntimeException("Email is already in use");
         }
 
+        
+
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -62,4 +64,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return findByUsername(username);
     }
-} 
+}
