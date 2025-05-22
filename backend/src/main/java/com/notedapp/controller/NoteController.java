@@ -53,4 +53,11 @@ public class NoteController {
             @PathVariable Long id) {
         return ResponseEntity.ok(noteService.getNote(user, id));
     }
-} 
+
+    @GetMapping("/search")
+    public ResponseEntity<List<NoteResponse>> searchNotes(
+            @AuthenticationPrincipal User user,
+            @RequestParam String keyword) {
+        return ResponseEntity.ok(noteService.searchNotes(user, keyword));
+    }
+}

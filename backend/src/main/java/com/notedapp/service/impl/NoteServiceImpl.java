@@ -70,6 +70,22 @@ public class NoteServiceImpl implements NoteService {
         return convertToResponse(note);
     }
 
+    @Override
+    public List<NoteResponse> searchNotes(User user, String keyword) {
+        if (keyword == null || keyword.trim().isEmpty()) {
+            // If no keyword provided, return all notes
+            return getUserNotes(user);
+        }
+        
+        // Use the repository method to search for notes
+        List<Note> matchingNotes = noteRepository.searchNotes(user.getId(), keyword);
+        
+        // Convert to response objects
+        return matchingNotes.stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
+    }
+
     private NoteResponse convertToResponse(Note note) {
         return new NoteResponse(
                 note.getId(),
@@ -79,4 +95,4 @@ public class NoteServiceImpl implements NoteService {
                 note.getUpdatedAt()
         );
     }
-} 
+}

@@ -53,16 +53,99 @@ Krabbel/
 
 ## Getting Started
 
-1. Install dependencies and run both frontend and backend:
+### Linux / macOS
+
+1. **Install Backend Dependencies**
    ```bash
-   (cd backend && mvn clean install && mvn spring-boot:run) & (cd frontend && npm install && npm run dev)
+   cd backend
+   ./mvnw clean install
    ```
 
-2. Access the application:
-   - Frontend: http://localhost:5173
-   - Backend API: http://localhost:8080/api/
-   - Swagger UI: http://localhost:8080/swagger-ui/index.html
-   - H2 Console: http://localhost:8080/h2-console (JDBC URL: jdbc:h2:mem:noted_db)
+2. **Install Frontend Dependencies**
+   ```bash
+   cd frontend
+   npm install
+   ```
+
+3. **Start Both Frontend and Backend Together**
+   ```bash
+   # Start both in the background
+   (cd backend && ./mvnw spring-boot:run) & (cd frontend && npm run dev)
+   ```
+
+14. **Stop Running Backend Process (if needed)**
+   ```bash
+   # Option 1: If you started with Ctrl+C in the terminal
+   # Simply press Ctrl+C in the terminal where Spring Boot is running
+   
+   # Option 2: Using Spring Boot Actuator endpoint (if configured)
+   curl -X POST http://localhost:8081/actuator/shutdown
+   
+   # Option 3: If all else fails, find and kill the process
+   pid=$(ps -ef | grep spring-boot | grep -v grep | awk '{print $2}')
+   if [ -n "$pid" ]; then
+     echo "Stopping Spring Boot app with PID: $pid"
+     kill $pid
+     # Only use kill -9 as a last resort if the process won't terminate
+     # kill -9 $pid
+   else
+     echo "No Spring Boot process found"
+   fi
+   ```
+
+### Windows
+
+1. **Install Backend Dependencies**
+   ```cmd
+   cd backend
+   mvnw.cmd clean install
+   ```
+
+2. **Install Frontend Dependencies**
+   ```cmd
+   cd frontend
+   npm install
+   ```
+
+3. **Start Both Frontend and Backend Together**
+   ```cmd
+   # Option 1: Using two separate command prompts
+   # First command prompt:
+   cd backend
+   mvnw.cmd spring-boot:run
+   
+   # Second command prompt:
+   cd frontend
+   npm run dev
+   
+   # Option 2: Using one command prompt with start
+   start cmd /k "cd backend && mvnw.cmd spring-boot:run"
+   start cmd /k "cd frontend && npm run dev"
+   ```
+
+4. **Stop Running Backend Process (if needed)**
+   ```cmd
+   # Option 1: If you started with Ctrl+C in the terminal
+   # Simply press Ctrl+C in the terminal where Spring Boot is running
+   
+   # Option 2: Using Spring Boot Actuator endpoint (if configured)
+   curl -X POST http://localhost:8081/actuator/shutdown
+   
+   # Option 3: If all else fails, find and kill the process
+   FOR /F "tokens=1" %%A IN ('jps -l ^| findstr KrabbelApplication') DO (
+     echo Stopping Spring Boot with PID: %%A
+     taskkill /PID %%A
+     REM Only use /F as a last resort if the process won't terminate
+     REM taskkill /F /PID %%A
+   )
+   ```
+
+### Access the Application
+
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8081/api/
+- Swagger UI: http://localhost:8081/swagger-ui/index.html
+- H2 Console: http://localhost:8081/h2-console (JDBC URL: jdbc:h2:mem:noted_db)
 
 ## Default Users
 
@@ -176,4 +259,4 @@ The application is pre-configured with two users:
 
 ## Contributing
 
-Contributions are welcome. Please feel free to submit a Pull Request. 
+Contributions are welcome. Please feel free to submit a Pull Request.
