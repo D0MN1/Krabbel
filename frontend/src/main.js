@@ -6,9 +6,11 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 
-// Configure axios
-// Remove baseURL since we're using Vite proxy
-// axios.defaults.baseURL = 'http://localhost:8081'
+// Configure axios for production and development
+// Use VITE_API_URL if available (production), otherwise rely on Vite proxy (development)
+if (import.meta.env.VITE_API_URL) {
+  axios.defaults.baseURL = import.meta.env.VITE_API_URL
+}
 
 // Add request interceptor to add JWT token to headers
 axios.interceptors.request.use(
