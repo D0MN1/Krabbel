@@ -38,7 +38,7 @@ public class SecurityConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/**") // Wees specifiek over je API paden
+                registry.addMapping("/**") // Allow all endpoints including root
                     .allowedOrigins(allowedOrigins.split(","))
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*")
@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'"))
             )
             .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/", "/status").permitAll() // Allow root endpoints
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/health/status").permitAll() // Public health check endpoint
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**").permitAll()
