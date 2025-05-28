@@ -41,14 +41,24 @@ Krabbel/
 │   ├── src/             # Source code
 │   └── package.json     # npm dependencies
 ├── scripts/             # Utility scripts
-│   ├── deploy-to-azure.sh
-│   └── verify-deployment.sh
+│   ├── cleanup-deprecated.sh
+│   ├── generate-secrets.sh
+│   ├── run-migrations.sh
+│   ├── run-prod-local.sh
+│   └── update-prod-passwords.sh
+├── .env.template        # Template for environment variables
+├── README.md            # This file
 ├── run.sh               # Cross-platform run script
 ├── run.bat              # Windows run script
+├── setup-env.sh         # Environment setup script
 ├── prepare-production.sh # Production preparation script
 ├── prepare-production.bat # Windows production preparation script
-├── .env.template        # Template for environment variables
-└── README.md            # This file
+├── AZURE_DEPLOYMENT.md  # Guide for Azure deployment
+├── DATABASE_SECURITY.md # Notes on database security
+├── PROJECT_DOCUMENTATION.md # Overall project documentation
+├── UPDATE_SUMMARY.md    # Summary of updates
+├── USAGE_GUIDE.md       # Detailed usage guide for scripts
+└── package.json         # Project metadata (if applicable at root)
 ```
 
 ## Prerequisites
@@ -62,108 +72,85 @@ Krabbel/
 
 ## Getting Started
 
-### Linux / macOS
+### 1. Install Dependencies
 
-1. **Install Backend Dependencies**
-   ```bash
-   cd backend
-   ./mvnw clean install
-   ```
+<details>
+<summary>Linux / macOS</summary>
 
-2. **Install Frontend Dependencies**
-   ```bash
-   cd frontend
-   npm install
-   ```
+## Install backend dependencies
+```bash
+cd backend
+./mvnw clean install
+```
 
-3. **Start Both Frontend and Backend Together**
-   ```bash
-   # Using the unified run script (recommended)
-   ./run.sh
-   
-   # With specific profile
-   ./run.sh --profile dev
-   
-   # Run only backend
-   ./run.sh --backend-only
-   
-   # Run only frontend
-   ./run.sh --frontend-only
-   
-   # Alternative: Start both in the background manually
-   (cd backend && ./mvnw spring-boot:run) & (cd frontend && npm run dev)
-   ```
+## Install frontend dependencies
+```bash
+cd frontend
+npm install
+```
 
-4. **Stop Running Backend Process (if needed)**
-   ```bash
-   # Option 1: If you started with Ctrl+C in the terminal
-   # Simply press Ctrl+C in the terminal where Spring Boot is running
-   
-   # Option 2: Using Spring Boot Actuator endpoint
-   curl -X POST http://localhost:8080/actuator/shutdown
-   
-   # Option 3: If all else fails, find and kill the process
-   pid=$(ps -ef | grep spring-boot | grep -v grep | awk '{print $2}')
-   if [ -n "$pid" ]; then
-     echo "Stopping Spring Boot app with PID: $pid"
-     kill $pid
-   else
-     echo "No Spring Boot process found"
-   fi
-   ```
+</details>
 
-### Windows
+<details>
+<summary>Windows</summary>
 
-1. **Install Backend Dependencies**
-   ```cmd
-   cd backend
-   mvnw.cmd clean install
-   ```
+## Install backend dependencies
+```bash
+cd backend
+mvnw.cmd clean install
+```
 
-2. **Install Frontend Dependencies**
-   ```cmd
-   cd frontend
-   npm install
-   ```
+## Install frontend dependencies
+```bash
+cd frontend
+npm install
+```
 
-3. **Start Both Frontend and Backend Together**
-   ```cmd
-   REM Using the unified run script (recommended)
-   run.bat
-   
-   REM With specific profile
-   run.bat --profile dev
-   
-   REM Run only backend
-   run.bat --backend-only
-   
-   REM Run only frontend
-   run.bat --frontend-only
-   
-   REM Alternative: Using two separate command prompts
-   REM First command prompt:
-   cd backend
-   mvnw.cmd spring-boot:run
-   
-   REM Second command prompt:
-   cd frontend
-   npm run dev
-   ```
+</details>
 
-4. **Stop Running Backend Process (if needed)**
-   ```cmd
-   REM Option 1: If you started with Ctrl+C in the terminal
-   REM Simply press Ctrl+C in the terminal where Spring Boot is running
-   
-   REM Option 2: Using Spring Boot Actuator endpoint
-   curl -X POST http://localhost:8080/actuator/shutdown
-   
-   REM Option 3: If all else fails, find and kill the process
-   FOR /F "tokens=1" %%A IN ('jps -l ^| findstr KrabbelApplication') DO (
-     echo Stopping Spring Boot with PID: %%A
-     taskkill /PID %%A
-   )
-   ```
+### 2. Setup Environment Configuration
+This step will guide you through creating your `.env` file.
+
+<details>
+<summary>Linux / macOS</summary>
+
+```bash
+./setup-env.sh
+```
+
+## Follow the prompts. If you need to manually edit the .env file:
+```bash
+nano .env
+```
+
+</details>
+
+<details>
+<summary>Windows</summary>
+
+```bash
+bash setup-env.sh
+```
+
+## Follow the prompts. If you need to manually edit the .env file:
+```bash
+notepad .env
+```
+
+If you don't have bash installed on Windows, you can manually copy `.env.template` to `.env` and edit it.
+
+</details>
+
+### 3. Run the Application
+## Linux / macOS 
+```bash
+./run.sh
+```
+
+## Windows
+```bash
+./run.bat
+```
 
 ### Access the Application
 
