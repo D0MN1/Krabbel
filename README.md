@@ -50,7 +50,8 @@ Krabbel/
 ├── README.md            # This file
 ├── run.sh               # Cross-platform run script
 ├── run.bat              # Windows run script
-├── setup-env.sh         # Environment setup script
+├── setup.sh             # Environment setup script
+├── setup.bat            # Windows environment setup script
 ├── prepare-production.sh # Production preparation script
 ├── prepare-production.bat # Windows production preparation script
 ├── AZURE_DEPLOYMENT.md  # Guide for Azure deployment
@@ -115,7 +116,7 @@ This step will guide you through creating your `.env` file.
 <summary>Linux / macOS</summary>
 
 ```bash
-./setup-env.sh
+./setup.sh
 ```
 
 ## Follow the prompts. If you need to manually edit the .env file:
@@ -128,16 +129,12 @@ nano .env
 <details>
 <summary>Windows</summary>
 
-```bash
-bash setup-env.sh
-```
+You will have to manually add the .env file. You can do this by copying `.env.template` and changing the name to `.env` (make sure you don't share with anyone!) and then edit it.
 
-## Follow the prompts. If you need to manually edit the .env file:
+Alternatively, you can run the `setup.bat` script which will guide you through the process or create a basic `.env` file if the template is missing.
 ```bash
-notepad .env
+.\\setup.bat
 ```
-
-If you don't have bash installed on Windows, you can manually copy `.env.template` to `.env` and edit it.
 
 </details>
 
