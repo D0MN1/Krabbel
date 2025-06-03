@@ -69,7 +69,7 @@ The application requires a `.env` file with environment variables. If this file 
 
 In development mode, the application uses the following database configurations:
 
-- URL: defined by `MYSQL_URL` in `.env` (default: jdbc:mysql://localhost:3306/krabbel_db)
+- URL: defined by `MYSQL_URL` in `.env` (default: jdbc:mysql://localhost:3306/krabbeldb)
 - Username: defined by `MYSQL_USERNAME` in `.env` 
 - Password: defined by `MYSQL_PASSWORD` in `.env`
 

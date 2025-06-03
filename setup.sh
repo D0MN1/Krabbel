@@ -60,7 +60,7 @@ ADMIN_PASSWORD=admin_password
 USER_PASSWORD=user_password
 
 # Azure MySQL Configuration (for production profile)
-AZURE_MYSQL_URL=jdbc:mysql://localhost:3306/krabbel_db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+AZURE_MYSQL_URL=jdbc:mysql://localhost:3306/krabbeldb?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
 AZURE_MYSQL_USERNAME=krabbel_user
 AZURE_MYSQL_PASSWORD=password
 EOL

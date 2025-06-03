@@ -15,7 +15,7 @@ echo "Running Flyway migrations..."
 cd ../backend
 
 # Set database connection properties
-DB_URL="${AZURE_MYSQL_URL:-jdbc:mysql://localhost:3306/krabbel_db?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true}"
+DB_URL="${AZURE_MYSQL_URL:-jdbc:mysql://localhost:3306/krabbeldb?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true}"
 DB_USER="${AZURE_MYSQL_USERNAME:-testuser}"
 DB_PASSWORD="${AZURE_MYSQL_PASSWORD:-password}"
 

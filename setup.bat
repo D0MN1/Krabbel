@@ -38,7 +38,7 @@ if not exist .env (
             echo USER_PASSWORD=user_password
             echo.
             echo # Azure MySQL Configuration (for production profile)
-            echo AZURE_MYSQL_URL=jdbc:mysql://localhost:3306/krabbel_db?useSSL=false^&allowPublicKeyRetrieval=true^&createDatabaseIfNotExist=true
+            echo AZURE_MYSQL_URL=jdbc:mysql://localhost:3306/krabbeldb?useSSL=false^&allowPublicKeyRetrieval=true^&createDatabaseIfNotExist=true
             echo AZURE_MYSQL_USERNAME=krabbel_user
             echo AZURE_MYSQL_PASSWORD=password
         ) > .env

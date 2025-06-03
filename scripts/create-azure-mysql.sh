@@ -10,7 +10,7 @@ RESOURCE_GROUP="krabbel-project"
 SERVER_NAME="krabbel-mysql"
 ADMIN_USER="krabbel_user"
 ADMIN_PASSWORD="HM]{yQ8k7hrt-0F25$-y/PF}"
-DATABASE_NAME="krabbel_db"
+DATABASE_NAME="krabbeldb"
 
 # Regions to try (in order of preference for EU West)
 REGIONS=("westeurope" "northeurope" "francecentral" "uksouth" "germanywestcentral" "swedencentral")
