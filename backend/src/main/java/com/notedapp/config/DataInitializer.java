@@ -21,10 +21,10 @@ public class DataInitializer implements CommandLineRunner {
     @Autowired
     private PasswordEncoder passwordEncoder;
     
-    @Value("${admin.default.password:admin123}")
+    @Value("${ADMIN_DEFAULT_PASSWORD:admin123}")
     private String adminDefaultPassword;
     
-    @Value("${user.default.password:user123}")
+    @Value("${USER_DEFAULT_PASSWORD:user123}")
     private String userDefaultPassword;
     
     @Value("${spring.profiles.active:dev}")
@@ -33,27 +33,47 @@ public class DataInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
         logger.info("Initializing data with profile: {}", activeProfile);
+        logger.info("Admin default password: {}", adminDefaultPassword);
+        logger.info("User default password: {}", userDefaultPassword);
         
-        // Create admin user
-        if (!userRepository.existsByUsername("admin")) {
+        // Check and create admin user
+        boolean adminExists = userRepository.existsByUsername("admin");
+        logger.info("Admin user exists: {}", adminExists);
+        
+        if (!adminExists) {
             User admin = new User();
             admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode(adminDefaultPassword));
+            String encodedAdminPassword = passwordEncoder.encode(adminDefaultPassword);
+            admin.setPassword(encodedAdminPassword);
             admin.setEmail("admin@notedapp.com");
             admin.setRole(User.Role.ADMIN);
-            userRepository.save(admin);
-            logger.info("Admin user created");
+            User savedAdmin = userRepository.save(admin);
+            logger.info("Admin user created with ID: {}, password length: {}", savedAdmin.getId(), encodedAdminPassword.length());
+        } else {
+            logger.info("Admin user already exists, skipping creation");
         }
 
-        // Create regular user only in dev mode
-        if (!activeProfile.equals("prod") && !userRepository.existsByUsername("user")) {
+        // Check and create regular user only in dev mode
+        boolean userExists = userRepository.existsByUsername("user");
+        logger.info("Regular user exists: {}", userExists);
+        
+        if (!activeProfile.equals("prod") && !userExists) {
             User user = new User();
             user.setUsername("user");
-            user.setPassword(passwordEncoder.encode(userDefaultPassword));
+            String encodedUserPassword = passwordEncoder.encode(userDefaultPassword);
+            user.setPassword(encodedUserPassword);
             user.setEmail("user@notedapp.com");
             user.setRole(User.Role.USER);
-            userRepository.save(user);
-            logger.info("Test user created in {} environment", activeProfile);
+            User savedUser = userRepository.save(user);
+            logger.info("Test user created in {} environment with ID: {}, password length: {}", activeProfile, savedUser.getId(), encodedUserPassword.length());
+        } else if (activeProfile.equals("prod")) {
+            logger.info("Production profile detected, skipping test user creation");
+        } else {
+            logger.info("Test user already exists, skipping creation");
         }
+        
+        // Log total user count
+        long totalUsers = userRepository.count();
+        logger.info("Total users in database: {}", totalUsers);
     }
 } 

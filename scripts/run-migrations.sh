@@ -15,9 +15,9 @@ echo "Running Flyway migrations..."
 cd ../backend
 
 # Set database connection properties
-DB_URL="${AZURE_MYSQL_URL:-jdbc:mysql://localhost:3306/krabbeldb?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true}"
-DB_USER="${AZURE_MYSQL_USERNAME:-testuser}"
-DB_PASSWORD="${AZURE_MYSQL_PASSWORD:-password}"
+DB_URL="${AZURE_MYSQL_URL:-jdbc:mysql://krabbeldb.mysql.database.azure.com:3306/krabbeldb?useSSL=true&requireSSL=true&serverTimezone=UTC&createDatabaseIfNotExist=true}"
+DB_USER="${AZURE_MYSQL_USERNAME:-krabbel_user}"
+DB_PASSWORD="${AZURE_MYSQL_PASSWORD:-HM]{yQ8k7hrt-0F25$-y/PF}"
 
 # Run Flyway manually
 ./mvnw flyway:migrate \

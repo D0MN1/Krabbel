@@ -38,9 +38,9 @@ if not exist .env (
             echo USER_PASSWORD=user_password
             echo.
             echo # Azure MySQL Configuration (for production profile)
-            echo AZURE_MYSQL_URL=jdbc:mysql://localhost:3306/krabbeldb?useSSL=false^&allowPublicKeyRetrieval=true^&createDatabaseIfNotExist=true
+            echo AZURE_MYSQL_URL=jdbc:mysql://krabbeldb.mysql.database.azure.com:3306/krabbeldb?useSSL=true^&requireSSL=true^&serverTimezone=UTC^&createDatabaseIfNotExist=true
             echo AZURE_MYSQL_USERNAME=krabbel_user
-            echo AZURE_MYSQL_PASSWORD=password
+            echo AZURE_MYSQL_PASSWORD=HM]{yQ8k7hrt-0F25$-y/PF}
         ) > .env
         echo Created basic .env file. Please edit it with your settings.
         echo You can use: notepad .env

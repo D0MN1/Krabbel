@@ -60,9 +60,9 @@ ADMIN_PASSWORD=admin_password
 USER_PASSWORD=user_password
 
 # Azure MySQL Configuration (for production profile)
-AZURE_MYSQL_URL=jdbc:mysql://localhost:3306/krabbeldb?useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+AZURE_MYSQL_URL=jdbc:mysql://krabbeldb.mysql.database.azure.com:3306/krabbeldb?useSSL=true&requireSSL=true&serverTimezone=UTC&createDatabaseIfNotExist=true
 AZURE_MYSQL_USERNAME=krabbel_user
-AZURE_MYSQL_PASSWORD=password
+AZURE_MYSQL_PASSWORD=HM]{yQ8k7hrt-0F25$-y/PF}
 EOL
         echo -e "${YELLOW}Created basic .env file. Please edit it with your settings.${NC}"
         echo -e "You can use: ${YELLOW}nano .env${NC}"

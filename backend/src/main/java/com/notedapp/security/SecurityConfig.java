@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.lang.NonNull;
 
 import java.util.Arrays;
 
@@ -35,14 +36,14 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Value("${CORS_ALLOWED_ORIGINS:http://localhost:5173}") // Default voor lokaal
+    @Value("${cors.allowed-origins:http://localhost:5173}") // Default voor lokaal
     private String allowedOrigins;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
                 String[] origins = allowedOrigins.split(",");
                 System.out.println("CORS Configuration - Allowed Origins: " + allowedOrigins);
                 
@@ -81,12 +82,13 @@ public class SecurityConfig {
             .headers(headers -> headers
                 .frameOptions(frameOptions -> frameOptions.deny())
                 .xssProtection(xss -> {}) // Use default XSS protection
-                .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'"))
+                // .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'")) // Temporarily disabled for testing
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/", "/status").permitAll() // Allow root endpoints
+                .requestMatchers("/cors-config").permitAll() // Allow CORS config endpoint
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/health/status").permitAll() // Public health check endpoint
+                .requestMatchers("/api/health/**").permitAll() // Public health check endpoint
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api-docs/**").permitAll()
                 .requestMatchers("/actuator/health", "/actuator/info", "/actuator/health/**").permitAll() // For Azure health checks
                 .requestMatchers("OPTIONS", "/**").permitAll() // Allow all OPTIONS requests (CORS preflight)
