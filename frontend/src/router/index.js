@@ -17,20 +17,27 @@ const router = createRouter({
       name: 'login',
       component: LoginView
     },
-    {
-      path: '/notes',
-      name: 'notes',
-      component: NotesView,
-      meta: { requiresAuth: true }
-    },
-    {
+{
+  path: '/notes',
+  name: 'notes',
+  component: NotesView,
+  meta: { requiresAuth: true }
+},
+{
   path: '/add-note',
   name: 'AddNote',
   component: () => import('../views/AddNoteView.vue')
-
+},
+{
+  path: '/favourites',
+  name: 'Favourites',
+  component: () => import('../views/FavouritesView.vue'),
+  meta: { requiresAuth: true }
 }
+
   ]
 })
+
 
 router.beforeEach((to, from, next) => {
   const publicPages = ['login', 'home']

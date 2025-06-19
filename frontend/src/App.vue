@@ -4,11 +4,5 @@
 
 
 <script setup>
-// Import de Navbar component
-
-
+// Geen globale navbar hier – die regel je per pagina
 </script>
-
-<style>
-
-</style>

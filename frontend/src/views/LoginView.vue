@@ -1,4 +1,8 @@
 <template>
+ 
+    <DefaultNavbar />
+    
+
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -58,10 +62,12 @@ const handleLogin = async () => {
     errorMessage.value = 'Login failed. Please check your credentials.'
   }
 }
+
 </script>
 
 <style scoped>
 .card {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
+
 </style>

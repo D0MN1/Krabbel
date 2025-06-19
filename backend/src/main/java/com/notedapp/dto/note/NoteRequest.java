@@ -1,36 +1,27 @@
 package com.notedapp.dto.note;
 
-import jakarta.validation.constraints.NotBlank;
+import java.util.List;
+
 public class NoteRequest {
-    @NotBlank(message = "Title is required")
     private String title;
-
-    @NotBlank(message = "Content is required")
     private String content;
+    private List<String> tags;
+    private String imageUrl;
+    private boolean isPublic;
 
-    private boolean aPublic;
+    // Getters and setters
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public String getTitle() {
-        return title;
-    }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public List<String> getTags() { return tags; }
+    public void setTags(List<String> tags) { this.tags = tags; }
 
-    public String getContent() {
-        return content;
-    }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public boolean isaPublic() {
-        return aPublic;
-    }
-
-    public void setaPublic(boolean aPublic) {
-        this.aPublic = aPublic;
-    }
+    public boolean isPublic() { return isPublic; }
+    public void setPublic(boolean aPublic) { isPublic = aPublic; }
 }

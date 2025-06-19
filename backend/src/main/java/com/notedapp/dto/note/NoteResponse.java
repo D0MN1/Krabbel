@@ -1,64 +1,48 @@
 package com.notedapp.dto.note;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@SuppressWarnings("unused")
 public class NoteResponse {
     private Long id;
     private String title;
     private String content;
-    private boolean isPublic; // Nieuw veld toegevoegd
+    private List<String> tags;
+    private String imageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private boolean isArchived;
+    private boolean isPublic;
+    private boolean isFavorite;
 
-    public NoteResponse() {
-    }
+    // Getters and setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getContent() { return content; }
+    public void setContent(String content) { this.content = content; }
 
-    public String getTitle() {
-        return title;
-    }
+    public List<String> getTags() { return tags; }
+    public void setTags(List<String> tags) { this.tags = tags; }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 
-    public String getContent() {
-        return content;
-    }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
 
-    public boolean isPublic() {
-        return isPublic;
-    }
+    public boolean isArchived() { return isArchived; }
+    public void setArchived(boolean archived) { this.isArchived = archived; }
 
-    public void setPublic(boolean isPublic) {
-        this.isPublic = isPublic;
-    }
+    public boolean isPublic() { return isPublic; }
+    public void setPublic(boolean aPublic) { isPublic = aPublic; }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+    public boolean isFavorite() { return isFavorite; }
+    public void setFavorite(boolean favorite) { isFavorite = favorite; }
 }

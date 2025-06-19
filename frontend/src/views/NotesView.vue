@@ -14,7 +14,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <input type="text" v-model="searchQuery" class="form-control mb-3" placeholder="Search notes..." />
-      <button class="sidebar-btn">Favourites</button>
+      <router-link to="/favourites" class="sidebar-btn">Favourites</router-link>
       <button class="sidebar-btn">Explore</button>
       <router-link to="/add-note" class="sidebar-btn">Add Note</router-link>
     </div>
@@ -32,9 +32,25 @@
           <div v-for="note in filteredNotes" :key="note.id" class="col-md-4 mb-4">
             <div class="card h-100">
               <div class="card-body">
-                <h5 class="card-title">{{ note.title }}</h5>
+                <h5 class="card-title d-flex justify-content-between">
+                  {{ note.title }}
+                  <button class="btn btn-sm" @click="toggleFavourite(note)" :class="note.favourite ? 'btn-warning' : 'btn-outline-warning'">
+                    ★
+                  </button>
+                </h5>
+
                 <p class="card-text">{{ note.content }}</p>
-                <button class="btn btn-sm btn-danger" @click="deleteNote(note.id)">Delete</button>
+                <p class="text-muted small mb-2">
+                  📅 {{ formatDate(note.createdAt) }} — 🕒 {{ formatTime(note.createdAt) }}
+                </p>
+
+                <div class="d-flex gap-2">
+                  <button class="btn btn-sm btn-outline-secondary" @click="editNote(note)">Edit</button>
+                  <button class="btn btn-sm btn-outline-info" @click="toggleArchive(note)">
+                    {{ note.archived ? 'Unarchive' : 'Archive' }}
+                  </button>
+                  <button class="btn btn-sm btn-danger" @click="deleteNote(note.id)">Delete</button>
+                </div>
               </div>
             </div>
           </div>
@@ -61,29 +77,17 @@ const fetchNotes = async () => {
   try {
     loading.value = true
     const token = localStorage.getItem('token')
-    console.log('⏳ Fetching notes with token:', token)
-
     const response = await axios.get('/api/notes', {
       headers: { Authorization: `Bearer ${token}` }
     })
-
-    console.log('✅ Notes fetched:', response.data)
     notes.value = response.data
   } catch (error) {
-    console.error('❌ Error fetching notes:', error)
+    console.error('Error fetching notes:', error)
     if (error.response?.status === 401) logout()
   } finally {
     loading.value = false
   }
 }
-
-
-const filteredNotes = computed(() => {
-  const q = searchQuery.value.toLowerCase()
-  return notes.value.filter(note =>
-    note.title.toLowerCase().includes(q) || note.content.toLowerCase().includes(q)
-  )
-})
 
 const deleteNote = async (id) => {
   try {
@@ -97,13 +101,58 @@ const deleteNote = async (id) => {
   }
 }
 
+const toggleArchive = async (note) => {
+  try {
+    const token = localStorage.getItem('token')
+    await axios.patch(`/api/notes/${note.id}/archive`, { archived: !note.archived }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    fetchNotes()
+  } catch (error) {
+    console.error('Error archiving note:', error)
+  }
+}
+
+const toggleFavourite = async (note) => {
+  try {
+    const token = localStorage.getItem('token')
+    await axios.patch(`/api/notes/${note.id}/favourite`, { favourite: !note.favourite }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+    fetchNotes()
+  } catch (error) {
+    console.error('Error toggling favourite:', error)
+  }
+}
+
+const editNote = (note) => {
+  // later eventueel naar aparte edit view
+  alert('Edit not implemented yet. Coming soon.')
+}
+
 const logout = () => {
   localStorage.removeItem('token')
   localStorage.removeItem('username')
   router.push('/')
 }
 
-// 🔄 Trigger fetchNotes bij navigatie terug naar deze view
+const formatDate = (timestamp) => {
+  const d = new Date(timestamp)
+  return d.toLocaleDateString()
+}
+
+const formatTime = (timestamp) => {
+  const d = new Date(timestamp)
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+}
+
+const filteredNotes = computed(() => {
+  const q = searchQuery.value.toLowerCase()
+  return notes.value.filter(note =>
+    note.title.toLowerCase().includes(q) || note.content.toLowerCase().includes(q)
+  )
+})
+
 watch(() => route.fullPath, () => {
   fetchNotes()
 })

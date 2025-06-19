@@ -10,8 +10,24 @@ import java.util.Optional;
 
 @Repository
 public interface NoteRepository extends JpaRepository<Note, Long> {
-    List<Note> findByUserAndIsDeletedFalse(User user);
-    List<Note> findByUserAndIsDeletedFalseOrderByUpdatedAtDesc(User user);
+    List<Note> findByUser(User user);
+
+    List<Note> findByIsPublic(boolean isPublic);
+
+    List<Note> findAllByUser(User user);
+
+    List<Note> findAllByUserIdAndIsPublicTrue(Long userId);
+
+    List<Note> findAllByUserAndIsFavoriteTrue(User user);
+
+    List<Note> findAllByUserAndIsArchivedTrue(User user);
+    
+    List<Note> findAllByIsPublicTrue();
+
+    Optional<Note> findByIdAndIsPublicTrue(Long noteId);
+
+    // Nieuwe methodes met soft delete
+    List<Note> findAllByUserAndIsDeletedFalse(User user);
+
     Optional<Note> findByIdAndUserAndIsDeletedFalse(Long id, User user);
-    List<Note> findByIsPublicTrueAndIsDeletedFalse(); // publieke notities
 }
