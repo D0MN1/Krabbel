@@ -34,7 +34,7 @@
               <div class="card-body">
                 <h5 class="card-title d-flex justify-content-between">
                   {{ note.title }}
-                  <button class="btn btn-sm" @click="toggleFavourite(note)" :class="note.favourite ? 'btn-warning' : 'btn-outline-warning'">
+                  <button class="btn btn-sm" @click="toggleFavourite(note, $event)" :class="note.favourite ? 'btn-warning' : 'btn-outline-warning'">
                     ★
                   </button>
                 </h5>
@@ -45,11 +45,11 @@
                 </p>
 
                 <div class="d-flex gap-2">
-                  <button class="btn btn-sm btn-outline-secondary" @click="editNote(note)">Edit</button>
-                  <button class="btn btn-sm btn-outline-info" @click="toggleArchive(note)">
+                  <button class="btn btn-sm btn-outline-secondary" @click="editNote(note, $event)">Edit</button>
+                  <button class="btn btn-sm btn-outline-info" @click="toggleArchive(note, $event)">
                     {{ note.archived ? 'Unarchive' : 'Archive' }}
                   </button>
-                  <button class="btn btn-sm btn-danger" @click="deleteNote(note.id)">Delete</button>
+                  <button class="btn btn-sm btn-danger" @click="deleteNote(note.id, $event)">Delete</button>
                 </div>
               </div>
             </div>
@@ -89,7 +89,8 @@ const fetchNotes = async () => {
   }
 }
 
-const deleteNote = async (id) => {
+const deleteNote = async (id, event) => {
+  event.stopPropagation();
   try {
     const token = localStorage.getItem('token')
     await axios.delete(`/api/notes/${id}`, {
@@ -101,7 +102,8 @@ const deleteNote = async (id) => {
   }
 }
 
-const toggleArchive = async (note) => {
+const toggleArchive = async (note, event) => {
+   event.stopPropagation();
   try {
     const token = localStorage.getItem('token')
     await axios.patch(`/api/notes/${note.id}/archive`, { archived: !note.archived }, {
@@ -113,7 +115,8 @@ const toggleArchive = async (note) => {
   }
 }
 
-const toggleFavourite = async (note) => {
+const toggleFavourite = async (note, event) => {
+   event.stopPropagation();
   try {
     const token = localStorage.getItem('token')
     await axios.patch(`/api/notes/${note.id}/favourite`, { favourite: !note.favourite }, {
@@ -125,7 +128,8 @@ const toggleFavourite = async (note) => {
   }
 }
 
-const editNote = (note) => {
+const editNote = (note, event) => {
+   event.stopPropagation();
   // later eventueel naar aparte edit view
   alert('Edit not implemented yet. Coming soon.')
 }

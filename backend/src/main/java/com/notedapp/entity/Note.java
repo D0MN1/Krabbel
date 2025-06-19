@@ -1,16 +1,17 @@
 package com.notedapp.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "notes")
-@Where(clause = "is_deleted = false")
+@FilterDef(name = "notDeletedFilter", defaultCondition = "is_deleted = false")
+@Filter(name = "notDeletedFilter")
 public class Note {
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
