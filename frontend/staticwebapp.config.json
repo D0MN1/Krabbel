@@ -9,6 +9,12 @@
       "serve": "/index.html",
       "statusCode": 200
     }
-  ]
+  ],
+  "platform": {
+    "apiRuntime": "node:18"
+  },
+  "environmentVariables": {
+    "VITE_API_URL": "https://krabbel-ezb4d0gffwhtepa0.westeurope-01.azurewebsites.net"
+  }
 }
 

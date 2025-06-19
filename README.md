@@ -232,6 +232,10 @@ The application is pre-configured with two users:
 - [x] Dummy data generation
 - [x] API endpoints for:
   - [x] User authentication
+  - [x] CRUD operations for notes
+  - [ ] Note sharing
+  - [ ] Version control
+  - [ ] Export functionality
 
 ## Production Deployment
 
@@ -269,34 +273,6 @@ The application is pre-configured with two users:
    - Use the provided scripts in the `scripts/` directory
 
 For detailed security configuration, refer to `SECURITY_CHECKLIST.md`
-  - [x] CRUD operations for notes
-  - [ ] Note sharing
-  - [ ] Version control
-  - [ ] Export functionality
-
-### AI Integration (Note Enhancement)
-- [ ] Research and select appropriate AI/LLM service (e.g., OpenAI, Anthropic, or self-hosted)
-- [ ] Design API endpoints for note processing:
-  - [ ] Formatting endpoint
-  - [ ] Summarization endpoint
-  - [ ] Keyword extraction
-  - [ ] Topic categorization
-- [ ] Implement backend service for AI processing:
-  - [ ] Create service layer for AI interactions
-  - [ ] Add caching for processed notes
-  - [ ] Implement rate limiting for AI requests
-- [ ] Add frontend components:
-  - [ ] Note enhancement button/option
-  - [ ] Processing status indicators
-  - [ ] Preview of AI-suggested changes
-  - [ ] User approval workflow
-- [ ] Implement features:
-  - [ ] Auto-formatting of messy notes
-  - [ ] Smart summarization
-  - [ ] Keyword/tag suggestions
-  - [ ] Topic categorization
-  - [ ] Grammar and spelling correction
-  - [ ] Structure suggestions for better readability
 
 ## License
 

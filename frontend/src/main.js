@@ -10,6 +10,9 @@ import axios from 'axios'
 // Use VITE_API_URL if available (production), otherwise rely on Vite proxy (development)
 if (import.meta.env.VITE_API_URL) {
   axios.defaults.baseURL = import.meta.env.VITE_API_URL
+} else if (import.meta.env.PROD) {
+  // Fallback for production when VITE_API_URL is not set
+  axios.defaults.baseURL = 'https://krabbel-ezb4d0gffwhtepa0.westeurope-01.azurewebsites.net'
 }
 
 // Add request interceptor to add JWT token to headers
